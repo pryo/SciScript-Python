@@ -7,8 +7,8 @@ class ZObj:
         self.LINEZ_ERR = LINEZ_ERR
         self.LINEEW = LINEEW
         self.LINEER_ERR = LINEEW_ERR
-
-        f = open('SpectrumViewer/line dictionary', 'r')
+        #f = open('line dictionary', 'r')
+        f = open('SpectrumViewer/line dictionary', 'r')#TODO chnage it back to full path
         lineList = f.readlines()
         self.lineDict = {}
 
