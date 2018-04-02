@@ -1,3 +1,4 @@
+import numpy as np
 class ZObj:
     def __init__(self,LINENAME=None,LINEWAVE=None,LINEZ =None,LINEZ_ERR= None,LINEEW=None,LINEEW_ERR=None):
         self.LINENAME = LINENAME
@@ -7,6 +8,8 @@ class ZObj:
         self.LINEZ_ERR = LINEZ_ERR
         self.LINEEW = LINEEW
         self.LINEER_ERR = LINEEW_ERR
+        self.ZAVG =np.sum(self.LINEZ)/np.sum(self.LINEZ!=0)
+        self.OBLINEWAVE = (self.LINEZ+1)*self.LINEWAVE
         #f = open('line dictionary', 'r')
         f = open('SpectrumViewer/line dictionary', 'r')#TODO chnage it back to full path
         lineList = f.readlines()

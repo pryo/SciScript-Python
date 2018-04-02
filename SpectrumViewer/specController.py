@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 class SpecController:
     def __init__(self,model,view):
         self.model = model
@@ -80,8 +81,15 @@ class SpecController:
                 l[0].set_visible(l[1].get_visible())
         plt.draw()
     def run(self):
-        self.plotTable()
+        #self.plotTable()
+        #self.view.graphAx.annotate("z="+str(self.model.zObj.ZAVG),xy=(0.5, 0))
         self.view.checkBtns.on_clicked(self.controlFunc)
-        self.view.graphAx.legend()
+
+
+        extraString = 'z= '+str(self.model.zObj.ZAVG)
+        handles, labels = self.view.graphAx.get_legend_handles_labels()
+        handles.append(mpatches.Patch(color='none', label=extraString))
+        self.view.graphAx.legend(handles=handles)
+        #self.view.graphAx.legend()
         self.view.show()
         #self.controlFunc('Other')

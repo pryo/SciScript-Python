@@ -36,7 +36,8 @@ class SpecModel:
         for lineIndex in range(0, len(self.zObj.LINENAME)):
             type = self.zObj.LINEZ_type[lineIndex]
             name = self.zObj.LINENAME[lineIndex]
-            position = self.zObj.LINEWAVE[lineIndex]
+            #position = self.zObj.LINEWAVE[lineIndex]
+            position = self.zObj.OBLINEWAVE[lineIndex]
             indexFlux=self.locateLmb(self.coaddObj.lam,position)
             if indexFlux:
                 height = self.coaddObj.flux[indexFlux]
