@@ -28,14 +28,24 @@ class SpecController:
         width = 0.5
         headlengthoffset = 1.5*3*width
         baseoffset = headlengthoffset-vOffset
-        self.eLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        # self.eLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        #                for key, val in self.model.eline.items()]
+        # # val0 position,val1 height, key name
+        # self.aLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        #                for key, val in self.model.aline.items()]
+        # self.aeLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        #                for key, val in self.model.aeline.items()]
+        # self.otherLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        #                for key, val in self.model.otherline.items()]
+        #default hide lines
+        self.eLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
                        for key, val in self.model.eline.items()]
         # val0 position,val1 height, key name
-        self.aLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        self.aLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
                        for key, val in self.model.aline.items()]
-        self.aeLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        self.aeLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
                        for key, val in self.model.aeline.items()]
-        self.otherLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
+        self.otherLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
                        for key, val in self.model.otherline.items()]
     def plotTable(self):
         self.view.tableAx.table(cellText=self.model.table_vals,
@@ -54,29 +64,29 @@ class SpecController:
             self.modelLine.set_visible(not self.modelLine.get_visible())
 
         elif label == 'Emission':
-            print('em clicked')
+            #print('em clicked')
             for l in self.eLines:
-                print(l[1].get_visible())
+                #print(l[1].get_visible())
                 l[1].set_visible(not l[1].get_visible())
                 l[0].set_visible(l[1].get_visible())
         elif label == 'Absorption':
-            print('ab clicked')
+            #print('ab clicked')
 
             for l in self.aLines:
-                print(l[1].get_visible())
+                #print(l[1].get_visible())
                 l[1].set_visible(not l[1].get_visible())
                 l[0].set_visible(l[1].get_visible())
 
         elif label == 'A or E':
-            print('ae clicked')
+            #print('ae clicked')
             for l in self.aeLines:
-                print(l[1].get_visible())
+                #print(l[1].get_visible())
                 l[1].set_visible(not l[1].get_visible())
                 l[0].set_visible(l[1].get_visible())
         elif label == 'Other':
-            print('other clicked')
+            #print('other clicked')
             for l in self.otherLines:
-                print(l[1].get_visible())
+                #print(l[1].get_visible())
                 l[1].set_visible(not l[1].get_visible())
                 l[0].set_visible(l[1].get_visible())
         plt.draw()

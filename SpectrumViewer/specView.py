@@ -21,7 +21,7 @@ class SpecView:
                                                  'Absorption',
                                                  'A or E',
                                                  'Other'),
-                                      (True, True, True,True,True,True,True))
+                                      (True, True, True,False,False,False,False))
     def show(self):
 
 
