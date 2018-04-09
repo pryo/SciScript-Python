@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import CheckButtons
 class SpecView:
     def __init__(self,filename):
-        self.figure = plt.figure(filename, figsize=(10, 15), dpi=100)
+        self.figure = plt.figure(filename, figsize=(10, 8), dpi=100)
 
         #self.graphAx = self.figure.add_subplot(212)
         self.graphAx = self.figure.add_subplot(111)
