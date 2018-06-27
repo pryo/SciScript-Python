@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import plotly
+import plotly.graph_objs as go
+import webbrowser
 class SpecController:
     def __init__(self,model,view):
         self.model = model
@@ -28,15 +31,7 @@ class SpecController:
         width = 0.5
         headlengthoffset = 1.5*3*width
         baseoffset = headlengthoffset-vOffset
-        # self.eLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
-        #                for key, val in self.model.eline.items()]
-        # # val0 position,val1 height, key name
-        # self.aLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
-        #                for key, val in self.model.aline.items()]
-        # self.aeLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
-        #                for key, val in self.model.aeline.items()]
-        # self.otherLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5)]
-        #                for key, val in self.model.otherline.items()]
+
         #default hide lines
         self.eLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
                        for key, val in self.model.eline.items()]
@@ -47,6 +42,8 @@ class SpecController:
                        for key, val in self.model.aeline.items()]
         self.otherLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
                        for key, val in self.model.otherline.items()]
+
+
     def plotTable(self):
         self.view.tableAx.table(cellText=self.model.table_vals,
                    colWidths=[0.1] * 3,
@@ -103,3 +100,62 @@ class SpecController:
         #self.view.graphAx.legend()
         self.view.show()
         #self.controlFunc('Other')
+    def windowRun(self,skyline ,flux ,model ,emission,absorption,
+                ae ,other):
+        if not skyline:
+            self.skyLine.remove()
+        if not flux:
+
+            self.fluxLine.remove()
+        if not model:
+
+            self.modelLine.remove()
+        if not emission:
+            for l in self.eLines:
+            # print(l[1].get_visible())
+                l[1].remove()
+                l[0].remove()
+        if not absorption:
+            for l in self.aLines:
+            # print(l[1].get_visible())
+                l[1].remove()
+                l[0].remove()
+        if not ae:
+            for l in self.aeLines:
+            # print(l[1].get_visible())
+                l[1].remove()
+                l[0].remove()
+        if not other:
+            for l in self.otherLines:
+            # print(l[1].get_visible())
+                l[1].remove()
+                l[0].remove()
+        # for l in self.aLines:
+        #     # print(l[1].get_visible())
+        #     l[1].set_visible(absorption)
+        #     l[0].set_visible(absorption)
+        # for l in self.aeLines:
+        #     # print(l[1].get_visible())
+        #     l[1].set_visible(ae)
+        #     l[0].set_visible(ae)
+        # for l in self.otherLines:
+        #     # print(l[1].get_visible())
+        #     l[1].set_visible(other)
+        #     l[0].set_visible(other)
+        extraString = 'z= '+str(self.model.zObj.ZAVG)
+        #handles, labels = self.view.graphAx.get_legend_handles_labels()
+        #handles.append(mpatches.Patch(color='none', label=extraString))
+        #self.view.graphAx.legend(handles=handles)
+        #self.view.graphAx.legend()
+        plotly_fig=self.view.returnPlotlyFig()
+        for a in plotly_fig['layout']["annotations"]:
+            a.update({
+            "showarrow": True
+        })
+
+        # plotly_fig['layout']["annotations"][0].update({
+        #     "showarrow": True
+        # })
+        plotly.offline.plot(plotly_fig, auto_open=True, filename='figure.html')
+        #webbrowser.open(filename, new=1)
+
