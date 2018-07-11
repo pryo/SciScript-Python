@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import plotly
+from IPython.display import FileLink, FileLinks
 import plotly.graph_objs as go
 import webbrowser
 class SpecController:
@@ -158,4 +159,6 @@ class SpecController:
         # })
         plotly.offline.plot(plotly_fig, auto_open=True, filename='figure.html')
         #webbrowser.open(filename, new=1)
+
+        FileLink('./figure.html')  # lists all downloadable files on server
 
