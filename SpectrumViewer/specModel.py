@@ -62,6 +62,8 @@ class SpecModel:
 
     def getModelline(self):
         return self.coaddObj.model
+    def getResidualline(self):
+        return self.getFluxline() - self.getModelline()
     def getEline(self):
         return self.eline
     def getAline(self):

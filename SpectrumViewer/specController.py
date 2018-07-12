@@ -11,6 +11,7 @@ class SpecController:
         self.fluxLine, = self.view.graphAx.plot(self.model.lam, self.model.getFluxline(),'r',label='flux')
         self.skyLine, = self.view.graphAx.plot(self.model.lam, self.model.getSkyline(), 'y', label='sky')
         self.modelLine, = self.view.graphAx.plot(self.model.lam, self.model.getModelline(), 'c', label='best fit model')
+        self.residualLine, = self.view.graphAx.plot(self.model.lam, self.model.getResidualline(), 'g', label='residual')
         self.aLines=[]
         self.eLines = []
         self.aeLines = []
@@ -101,7 +102,7 @@ class SpecController:
         #self.view.graphAx.legend()
         self.view.show()
         #self.controlFunc('Other')
-    def windowRun(self,skyline ,flux ,model ,emission,absorption,
+    def windowRun(self,skyline ,flux ,model,residual,emission,absorption,
                 ae ,other):
         if not skyline:
             self.skyLine.remove()
@@ -111,6 +112,8 @@ class SpecController:
         if not model:
 
             self.modelLine.remove()
+        if not residual:
+            self.residualLine.remove()
         if not emission:
             for l in self.eLines:
             # print(l[1].get_visible())
