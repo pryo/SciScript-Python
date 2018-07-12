@@ -143,20 +143,23 @@ class SpecController:
         #     # print(l[1].get_visible())
         #     l[1].set_visible(other)
         #     l[0].set_visible(other)
-        extraString = 'z= '+str(self.model.zObj.ZAVG)
-        #handles, labels = self.view.graphAx.get_legend_handles_labels()
-        #handles.append(mpatches.Patch(color='none', label=extraString))
-        #self.view.graphAx.legend(handles=handles)
+        # extraString = 'z= '+str(self.model.zObj.ZAVG)
+        # handles, labels = self.view.graphAx.get_legend_handles_labels()
+        # handles.append(mpatches.Patch(color='none', label=extraString))
+        # self.view.graphAx.legend(handles=handles)
         #self.view.graphAx.legend()
         plotly_fig=self.view.returnPlotlyFig()
+
         for a in plotly_fig['layout']["annotations"]:
             a.update({
             "showarrow": True
         })
+        plotly_fig['layout']['title'] = 'z= '+str(self.model.zObj.ZAVG)
 
         # plotly_fig['layout']["annotations"][0].update({
         #     "showarrow": True
         # })
+
         plotly.offline.plot(plotly_fig, auto_open=True, filename='figure.html')
         #webbrowser.open(filename, new=1)
 
