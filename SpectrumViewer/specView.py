@@ -5,17 +5,19 @@ import mpld3
 class SpecView:
     def __init__(self,filename):
         self.figure = plt.figure(filename, figsize=(10, 8), dpi=100)
-
+        # initialize the figure object with matplotlib
         #self.graphAx = self.figure.add_subplot(212)
         self.graphAx = self.figure.add_subplot(111)
+        # generate axes object
         self.graphAx.set_xlabel('lambda/angstrom')
+
         self.graphAx.set_ylabel('10-17 ergs/s/cm2/angstrom')
         self.graphAx.set_ylim([0, 500])
-        #self.tableAx = self.figure.add_subplot(211)
-        #self.tableAx.axis('tight')
-        #self.tableAx.axis('off')
+        #configure the axe where the spectrum will be showed
+
 
         self.rax = plt.axes([0.00, 0.05, 0.10, 0.15])
+        # iniialize a seperate axes object that will be used to contain radio buttons
         self.checkBtns = CheckButtons(self.rax, ('Skyline',
                                                  'Flux',
                                                  'Model',
@@ -24,10 +26,21 @@ class SpecView:
                                                  'A or E',
                                                  'Other'),
                                       (True, True, True,False,False,False,False))
+        # create buttons with tags: 'Skyline',
+        #                                                  'Flux',
+        #                                                  'Model',
+        #                                                  'Emission',
+        #                                                  'Absorption',
+        #                                                  'A or E',
+        #                                                  'Other')
+        # and default value
+        # when the check buttons was clicked, the gadget will call the callback function with the tag as argument
     def show(self):
 
 
         plt.show()
+        #plt is the matplotlib state machine interface, once imported to the interpreter, can be used accross the code
+        # show whatever has been passed to the state machine in previous program.
         #mpld3.show(fig=self.figure, ip='127.0.0.1', port=8888, n_retries=50, local=True, open_browser=True, http_server=None)
         #TODO : change the display mode to cell mode
 class windowView:
@@ -43,3 +56,4 @@ class windowView:
         return self.figure
     def returnPlotlyFig(self):
         return tls.mpl_to_plotly(self.figure)
+        # port matplolib figure to plotly image object

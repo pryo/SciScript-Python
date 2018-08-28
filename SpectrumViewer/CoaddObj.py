@@ -3,6 +3,8 @@ import numpy as np
 class CoaddObj:
     def __init__(self,flux,loglam=None,ivar=None,andMask=None,orMask=None
                  ,wdisp=None,sky=None,model=None):#type can be pfs
+        # the class holding coadd data
+
         self.flux = flux
         self.loglam = loglam
         self.ivar =ivar

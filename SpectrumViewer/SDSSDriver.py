@@ -23,13 +23,15 @@ import SpectrumViewer.ZObj as Z
 #     return path
 
 def loadFITS(filename,fileSource):
+    # this function was used to load critical information from fits file to standardised data object
 
     if fileSource=='SDSS':
-        coaddData =1
-        zData =3
-        hdulist = fits.open(filename)
+        coaddData =1 # the index of Coadd data in the HDU list
+        zData =3 # index of absorption and emission line data in HDU list
+        hdulist = fits.open(filename)# fits file store the data in form of HDU list
         c=hdulist[coaddData].data
         z=hdulist[zData].data
+        # the name of the data unit can be found on the official SDSS DR webpage
         coaddObj = Coadd.CoaddObj(
             flux=c['flux'],
             loglam=c['loglam'],

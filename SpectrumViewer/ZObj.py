@@ -10,6 +10,9 @@ class ZObj:
         self.LINEER_ERR = LINEEW_ERR
         self.ZAVG =np.sum(self.LINEZ)/np.sum(self.LINEZ!=0)
         self.OBLINEWAVE = (self.LINEZ+1)*self.LINEWAVE
+        # the observed wavelength of lines calculated by rest frame wave length
+        # (z +1)* lambda_rest frame
+
         #f = open('line dictionary', 'r')
         f = open('SpectrumViewer/line dictionary', 'r')#TODO chnage it back to full path
         lineList = f.readlines()

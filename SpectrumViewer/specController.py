@@ -7,11 +7,14 @@ import webbrowser
 class SpecController:
     def __init__(self,model,view):
         self.model = model
+        # take SpecModel object as argument to initialize
         self.view = view
+        # take SpecView or a windowView object as argument to initialize
         self.fluxLine, = self.view.graphAx.plot(self.model.lam, self.model.getFluxline(),'r',label='flux')
         self.skyLine, = self.view.graphAx.plot(self.model.lam, self.model.getSkyline(), 'y', label='sky')
         self.modelLine, = self.view.graphAx.plot(self.model.lam, self.model.getModelline(), 'c', label='best fit model')
         self.residualLine, = self.view.graphAx.plot(self.model.lam, self.model.getResidualline(), 'g', label='residual')
+        #initilize the line object by calling plot function in axes object
         self.aLines=[]
         self.eLines = []
         self.aeLines = []
@@ -30,19 +33,27 @@ class SpecController:
 
         # arrow
         vOffset =-5
+        # the vertical offset of the arrow
         width = 0.5
+        # the width of the arrow
         headlengthoffset = 1.5*3*width
+        # the length of arrow head
         baseoffset = headlengthoffset-vOffset
-
+        #
         #default hide lines
-        self.eLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
+        self.eLines = [[self.view.graphAx.text(val[0], val[1]+baseoffset, key, rotation=90, visible=False),
+                        self.view.graphAx.arrow(val[0], val[1]+baseoffset, 0, vOffset, width=0.5, visible=False)]
                        for key, val in self.model.eline.items()]
+        # create a list tuple (text, position)
         # val0 position,val1 height, key name
-        self.aLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
+        self.aLines = [[self.view.graphAx.text(val[0], val[1]+baseoffset, key, rotation=90, visible=False),
+                        self.view.graphAx.arrow(val[0], val[1]+baseoffset, 0, vOffset, width=0.5, visible=False)]
                        for key, val in self.model.aline.items()]
-        self.aeLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
+        self.aeLines = [[self.view.graphAx.text(val[0], val[1]+baseoffset, key, rotation=90, visible=False),
+                         self.view.graphAx.arrow(val[0], val[1]+baseoffset, 0, vOffset, width=0.5, visible=False)]
                        for key, val in self.model.aeline.items()]
-        self.otherLines = [[self.view.graphAx.text(val[0] , val[1]+baseoffset, key, rotation=90,visible=False), self.view.graphAx.arrow(val[0],val[1]+baseoffset,0,vOffset,width=0.5,visible=False)]
+        self.otherLines = [[self.view.graphAx.text(val[0], val[1]+baseoffset, key, rotation=90, visible=False),
+                            self.view.graphAx.arrow(val[0], val[1]+baseoffset, 0, vOffset, width=0.5, visible=False)]
                        for key, val in self.model.otherline.items()]
 
 
@@ -55,6 +66,7 @@ class SpecController:
                    )
         self.view.tableAx.text(12, 3.4, 'redshift and error', size=8)
     def controlFunc(self,label):
+
         if label == 'Skyline':
             self.skyLine.set_visible(not self.skyLine.get_visible())
         elif label == 'Flux':
@@ -90,32 +102,46 @@ class SpecController:
                 l[0].set_visible(l[1].get_visible())
         plt.draw()
     def run(self):
-        #self.plotTable()
-        #self.view.graphAx.annotate("z="+str(self.model.zObj.ZAVG),xy=(0.5, 0))
-        self.view.checkBtns.on_clicked(self.controlFunc)
 
+        self.view.checkBtns.on_clicked(self.controlFunc)
+        # assign the callback function controlFunc to the radio buttons
 
         extraString = 'z= '+str(self.model.zObj.ZAVG)
+        # create the string as label to show the redshift/ ZAVG is the average value of redshift in zObj
         handles, labels = self.view.graphAx.get_legend_handles_labels()
+        # get a handle of the legend
         handles.append(mpatches.Patch(color='none', label=extraString))
+        #attatch the z string on the legend
         self.view.graphAx.legend(handles=handles)
+
         #self.view.graphAx.legend()
         self.view.show()
+        # show the graphAx and buttons in a matplotlib.pyplot figure
         #self.controlFunc('Other')
-    def windowRun(self,skyline ,flux ,model,residual,emission,absorption,
-                ae ,other):
+    def windowRun(self,skyline ,flux,
+                  model,residual,
+                  emission,absorption,
+                ae,other):
+        # take bool value as flag in order to determine which line to show.
+        # all line object was constructed into controller class in the initiation
         if not skyline:
             self.skyLine.remove()
+            # if a flag is false, then remove the line from the axis it resides in
         if not flux:
-
             self.fluxLine.remove()
-        if not model:
 
+        if not model:
             self.modelLine.remove()
+
         if not residual:
             self.residualLine.remove()
+
         if not emission:
             for l in self.eLines:
+                # eLines is a list of (key,value) pair
+                # a key is the name of the line
+                # a value is a tuple (position,height) denoting the location of annotation
+                # aLine and aeLines are similarly constructed
             # print(l[1].get_visible())
                 l[1].remove()
                 l[0].remove()
@@ -152,11 +178,13 @@ class SpecController:
         # self.view.graphAx.legend(handles=handles)
         #self.view.graphAx.legend()
         plotly_fig=self.view.returnPlotlyFig()
+        # get the plotly figure
 
         for a in plotly_fig['layout']["annotations"]:
             a.update({
             "showarrow": True
         })
+        # plotly_figure will hide the annotations, so manualy override in here
         plotly_fig['layout']['title'] = 'z= '+str(self.model.zObj.ZAVG)
 
         # plotly_fig['layout']["annotations"][0].update({
