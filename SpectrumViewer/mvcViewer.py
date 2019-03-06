@@ -2,6 +2,7 @@ import SpectrumViewer.specController as C
 import SpectrumViewer.specModel as M
 import SpectrumViewer.specView as V
 import SpectrumViewer.SDSSDriver as driver
+
 def view(filename,filesource):
     coaddObj, zObj = driver.loadFITS(filename, filesource)
     m = M.SpecModel(coaddObj, zObj)
@@ -18,5 +19,4 @@ def window_view(filename,filesource,skyline = False,flux = True,model = True,res
     m = M.SpecModel(coaddObj, zObj)
     v=V.windowView(filename)
     c = C.SpecController(m,v)
-    c.windowRun(skyline ,flux ,model ,residual,emission,absorption,
-                ae ,other )
+    c.windowRun(skyline ,flux ,model ,residual,emission,absorption,ae ,other)

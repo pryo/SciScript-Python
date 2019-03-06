@@ -36,34 +36,35 @@ class SpecModel:
         #         self.otherline[self.zObj.LINENAME[lineIndex]]=self.zObj.LINEWAVE[lineIndex]
         #with vertical postition
 
-        for lineIndex in range(0, len(self.zObj.LINENAME)):
-            # for each a/e line in the data
-            type = self.zObj.LINEZ_type[lineIndex]
-            # check with the a/e line directory to get the type either absorption or emission
-            name = self.zObj.LINENAME[lineIndex]
-            # get the name of the line
-            #position = self.zObj.LINEWAVE[lineIndex]
-            position = self.zObj.OBLINEWAVE[lineIndex]
-            # the horizontal position of the red-shifted a/e line on the chart
-            indexFlux=self.locateLmb(self.coaddObj.lam,position)
-            # get the corresponding index of such line on the flux list e.g the 100 th number in the list of flux
-            # has same horizontal position of this particular a/e line.
-            if indexFlux:
-                height = self.coaddObj.flux[indexFlux]
-                # according to the index of a number in the flux list, find the value of that number
-                # finally, get the height of flux
-            else:
-                height =0
-                #if found nothing just set the height to be 0
-            if type == 'a':
-                self.aline[name]=[position,height]
-            elif type == 'e':
-                self.eline[name]=[position,height]
-            elif type=='ae':
-                self.aeline[name] = [position, height]
-            elif type == 'other':
-                self.otherline[name]=[position,height]
-            #construct the line dictionary that including the position of annotation
+        if self.zObj.LINENAME is not None:
+            for lineIndex in range(0, len(self.zObj.LINENAME)):
+                # for each a/e line in the data
+                type = self.zObj.LINEZ_type[lineIndex]
+                # check with the a/e line directory to get the type either absorption or emission
+                name = self.zObj.LINENAME[lineIndex]
+                # get the name of the line
+                #position = self.zObj.LINEWAVE[lineIndex]
+                position = self.zObj.OBLINEWAVE[lineIndex]
+                # the horizontal position of the red-shifted a/e line on the chart
+                indexFlux=self.locateLmb(self.coaddObj.lam,position)
+                # get the corresponding index of such line on the flux list e.g the 100 th number in the list of flux
+                # has same horizontal position of this particular a/e line.
+                if indexFlux:
+                    height = self.coaddObj.flux[indexFlux]
+                    # according to the index of a number in the flux list, find the value of that number
+                    # finally, get the height of flux
+                else:
+                    height =0
+                    #if found nothing just set the height to be 0
+                if type == 'a':
+                    self.aline[name]=[position,height]
+                elif type == 'e':
+                    self.eline[name]=[position,height]
+                elif type=='ae':
+                    self.aeline[name] = [position, height]
+                elif type == 'other':
+                    self.otherline[name]=[position,height]
+                #construct the line dictionary that including the position of annotation
 
 
 

@@ -10,6 +10,7 @@ class SpecController:
         # take SpecModel object as argument to initialize
         self.view = view
         # take SpecView or a windowView object as argument to initialize
+
         self.fluxLine, = self.view.graphAx.plot(self.model.lam, self.model.getFluxline(),'r',label='flux')
         self.skyLine, = self.view.graphAx.plot(self.model.lam, self.model.getSkyline(), 'y', label='sky')
         self.modelLine, = self.view.graphAx.plot(self.model.lam, self.model.getModelline(), 'c', label='best fit model')

@@ -1,4 +1,4 @@
-# SciScript-Python
+# PFS SpectrumViewer
 
 ## Python libraries for Jupyter Notebooks
 

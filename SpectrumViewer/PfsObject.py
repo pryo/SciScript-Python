@@ -1,8 +1,7 @@
-import os
 from . import lineList
 import numpy as np
-class ZObj:
-    def __init__(self,LINENAME=[],LINEWAVE=None,LINEZ =None,LINEZ_ERR= None,LINEEW=None,LINEEW_ERR=None):
+class PfsObject:
+    def __init__(self,LINENAME=None,LINEWAVE=None,LINEZ =None,LINEZ_ERR= None,LINEEW=None,LINEEW_ERR=None):
         self.LINENAME = LINENAME
 
         self.LINEWAVE = LINEWAVE
@@ -10,24 +9,16 @@ class ZObj:
         self.LINEZ_ERR = LINEZ_ERR
         self.LINEEW = LINEEW
         self.LINEER_ERR = LINEEW_ERR
-        if self.LINEZ is not None:
-            self.ZAVG =np.sum(self.LINEZ)/np.sum(self.LINEZ!=0)
-        else:
-            self.ZAVG = None
-
-        if self.LINEWAVE is not None and self.LINEZ is not None:
-            self.OBLINEWAVE = (self.LINEZ+1)*self.LINEWAVE
-        else:
-            self.OBLINEWAVE = None
-            # the observed wavelength of lines calculated by rest frame wave length
+        self.ZAVG =np.sum(self.LINEZ)/np.sum(self.LINEZ!=0)
+        self.OBLINEWAVE = (self.LINEZ+1)*self.LINEWAVE
+        # the observed wavelength of lines calculated by rest frame wave length
         # (z +1)* lambda_rest frame
 
-        #f = open('./SpectrumViewer/line_dictionary.txt', 'r')
-        #TEST_FILENAME = os.path.join(os.path.dirname(__file__), 'test.txt')
+        #f = open('line dictionary', 'r')
         #f = open('SpectrumViewer/line dictionary', 'r')#TODO chnage it back to full path
         #lineList = f.readlines()
-
-        self.lineDict = {}
+        #lineList = uitils.read_spectrum_lines()
+        #self.lineDict = {}
 
         for item in lineList:
             listTemp = item.split()
@@ -48,4 +39,3 @@ class ZObj:
             else:
                 #other
                 self.LINEZ_type.append('other')
-
