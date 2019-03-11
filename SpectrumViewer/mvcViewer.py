@@ -3,7 +3,7 @@ import SpectrumViewer.specModel as M
 import SpectrumViewer.specView as V
 import SpectrumViewer.SDSSDriver as driver
 
-def view(filename,filesource):
+def view(filename,filesource="PFS"):
     coaddObj, zObj = driver.loadFITS(filename, filesource)
     m = M.SpecModel(coaddObj, zObj)
     v = V.SpecView(filename)
@@ -13,7 +13,7 @@ def view(filename,filesource):
 
 #Set the bool value to be true for those information you are interested:
 #ae means absorption or emission line, other means undetermined line
-def window_view(filename,filesource,skyline = False,flux = True,model = True,residual = False,emission=False,absorption=False,
+def window_view(filename,filesource="PFS",skyline = False,flux = True,model = True,residual = False,emission=False,absorption=False,
                 ae = False,other = False):
     coaddObj, zObj = driver.loadFITS(filename, filesource)
     m = M.SpecModel(coaddObj, zObj)

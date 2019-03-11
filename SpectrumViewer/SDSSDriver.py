@@ -5,6 +5,7 @@ from astropy.io import fits
 from urllib.parse import urlparse
 import SpectrumViewer.CoaddObj as Coadd
 import SpectrumViewer.ZObj as Z
+import math
 
 object_types = {"PfsObject":"PfsObject", "ZObject":"ZObject"}
 
@@ -48,7 +49,7 @@ def loadFITS(file_name,file_source):
     hdulist = fits.open(file_name)  # fits file store the data in form of HDU list
     object_type = get_object_type(file_name, hdulist)
 
-    if file_source=='SDSS':
+    if file_source=='PFS':
         if object_type == object_types["ZObject"]:
             coaddData =1 # the index of Coadd data in the HDU list
             zData =3 # index of absorption and emission line data in HDU list
@@ -80,7 +81,7 @@ def loadFITS(file_name,file_source):
             # the name of the data unit can be found on the official SDSS DR webpage
             coaddObj = Coadd.CoaddObj(
                 flux=c['flux'],
-                loglam=c['lambda'],
+                loglam=[math.log10(lam) for lam in c['lambda']],
                 ivar=c['fluxvariance'],
                 andMask=c['Mask'],
                 orMask=[0.0 for s in range(len(c['flux']))],
@@ -100,4 +101,4 @@ def loadFITS(file_name,file_source):
 
 
     else:
-        print('Sorry, we are loyal to SDSS ONLY, for the time being. ')
+        print('Only PFS file sources supported for now.')
